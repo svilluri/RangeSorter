@@ -3,7 +3,13 @@ package ranger.rangesorter;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
+@SpringBootApplication
 public class CodeChallengeExample {
 
 	final static Logger logger = Logger.getLogger(CodeChallengeExample.class);
@@ -16,42 +22,70 @@ public class CodeChallengeExample {
 	public static String[] inputArgsWrongOrder ={"[94133,94133]", "[95450,95299]","[94200,94299]"};
 	
 	public static void main(String[] args) throws Exception {
-		
+
 		logger.info("Main: Begin");
-		
-//		sortRangeValues(args);
-		List<Range> outList = RangeSorter.sortRangeValues(inputArgs1);
-		print(inputArgs1,outList);
-		
-		outList = RangeSorter.sortRangeValues(inputArgs2);
-		print(inputArgs2,outList);
-		
-		outList = RangeSorter.sortRangeValues(inputArgs3);
-		print(inputArgs3,outList);
-		
-		outList = RangeSorter.sortRangeValues(inputArgs4);
-		print(inputArgs4,outList);
-		
-		try {
-			outList = RangeSorter.sortRangeValues(inputArgsNonNumeric);
-			print(inputArgsNonNumeric,outList);
-		}
-		catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		System.out.println();
-		try {
-			outList = RangeSorter.sortRangeValues(inputArgsWrongOrder);
-			print(inputArgsWrongOrder,outList);
-		}
-		catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		
-		System.out.println();
+
+		SpringApplication.run(CodeChallengeExample.class, args);
+        
 		logger.info("Main: End");
 	}
 
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {		
+        return args -> {
+    		logger.info("commandLineRunner: Begin");
+    		
+	//		sortRangeValues(args);
+    		System.out.println("Scenario1\n");
+    		
+			List<Range> outList = RangeSorter.sortRangeValues(inputArgs1);
+			print(inputArgs1,outList);
+			
+    		System.out.println("----------------------------\n");
+    		
+    		System.out.println("Scenario2\n");
+    		
+			outList = RangeSorter.sortRangeValues(inputArgs2);
+			print(inputArgs2,outList);
+			
+    		System.out.println("----------------------------\n");			
+    		System.out.println("Scenario3\n");
+    		
+			outList = RangeSorter.sortRangeValues(inputArgs3);
+			print(inputArgs3,outList);
+			
+    		System.out.println("----------------------------\n");			
+    		System.out.println("Scenario4\n");
+    		
+			outList = RangeSorter.sortRangeValues(inputArgs4);
+			print(inputArgs4,outList);
+			
+			try {
+	    		System.out.println("----------------------------\n");				
+	    		System.out.println("Scenario5\n");
+	    		
+				outList = RangeSorter.sortRangeValues(inputArgsNonNumeric);
+				print(inputArgsNonNumeric,outList);
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+			System.out.println();
+			try {
+				outList = RangeSorter.sortRangeValues(inputArgsWrongOrder);
+				print(inputArgsWrongOrder,outList);
+			}
+			catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+			
+			System.out.println();
+		       
+			logger.info("commandLineRunner: End");	  		
+       };
+     
+    }
+    
 	/**
 	 * This method shows the usage of the Java application.
 	 */
@@ -67,10 +101,14 @@ public class CodeChallengeExample {
 	 */
 	public static void printList(List<Range> listOfValues) {
 		
+		logger.info("printList: Begin");
+		
 		for ( Range rangeVal:listOfValues ) {
 			System.out.print(rangeVal+ " ");
 		}
 		System.out.println("\n");
+
+		logger.info("printList: End");
 	}
 	
 	/**
@@ -80,10 +118,15 @@ public class CodeChallengeExample {
 	 */
 	public static void printArgs(String[] args) {
 		
+		logger.info("printArgs: Begin");
+		
 		for ( String arg:args ) {
 			System.out.print(arg+ " ");
 		}
+		
 		System.out.println("\n");
+		
+		logger.info("printArgs: End");		
 	}
 	
 	/**
@@ -92,12 +135,17 @@ public class CodeChallengeExample {
 	 * @param output
 	 */
 	public static void print(String[] input, List<Range> output) {
+		
+		logger.info("print: Begin");
+		
 //		System.out.println("Input List");
-		logger.debug("Input List");
+		System.out.println("Input List");
 		printArgs(input);
 		
 //		System.out.println("Output List");
-		logger.debug("Output List");
+		System.out.println("Output List");
 		printList(output);
+		
+		logger.info("print: End");		
 	}
 }
